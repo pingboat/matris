@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="{{ .Site.Params.description }}">
-    <meta name="author" content="{{ .Site.Params.author }}">
     
     <!-- Open Graph -->
     <meta property="og:title" content="{{ .Title }} - {{ .Site.Title }}">
@@ -27,17 +26,11 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ "images/favicon.png" | relURL }}">
 </head>
-<body>
-    <!-- Navigation -->
-    {{ partial "navigation.html" . }}
-    
+<body class="{{ if .IsHome }}homepage{{ end }}">
     <!-- Main Content -->
     <main>
         {{ block "main" . }}{{ end }}
     </main>
-    
-    <!-- Footer -->
-    {{ partial "footer.html" . }}
     
     <!-- Scripts -->
     <script src="{{ "js/main.js" | relURL }}"></script>
