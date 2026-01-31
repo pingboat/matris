@@ -1,36 +1,45 @@
-baseURL = "https://matrisin.netlify.app/"
-languageCode = "en-us"
-title = "MATRIS - Embrace Your Inner Devi"
-theme = ""
-
-[params]
-  description = "Premium handloom sarees celebrating the divine feminine"
-  author = "MATRIS"
-  
-  # Brand Colors (Locked)
-  colorVermillion = "#E34234"
-  colorTeal = "#0D4C4A"
-  colorCream = "#F5F1E8"
-  
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
-
-[menu]
-  [[menu.main]]
-    name = "Collections"
-    url = "/collections/"
-    weight = 1
-  [[menu.main]]
-    name = "Philosophy"
-    url = "/philosophy/"
-    weight = 2
-  [[menu.main]]
-    name = "Lookbook"
-    url = "/lookbook/"
-    weight = 3
-  [[menu.main]]
-    name = "Contact"
-    url = "/contact/"
-    weight = 4
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ .Site.Params.description }}">
+    <meta name="author" content="{{ .Site.Params.author }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ .Title }} - {{ .Site.Title }}">
+    <meta property="og:description" content="{{ .Site.Params.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:image" content="{{ .Site.BaseURL }}images/og-image.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ .Title }} - {{ .Site.Title }}">
+    <meta name="twitter:description" content="{{ .Site.Params.description }}">
+    <meta name="twitter:image" content="{{ .Site.BaseURL }}images/og-image.jpg">
+    
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ "images/favicon.png" | relURL }}">
+</head>
+<body>
+    <!-- Navigation -->
+    {{ partial "navigation.html" . }}
+    
+    <!-- Main Content -->
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+    
+    <!-- Footer -->
+    {{ partial "footer.html" . }}
+    
+    <!-- Scripts -->
+    <script src="{{ "js/main.js" | relURL }}"></script>
+</body>
+</html>
