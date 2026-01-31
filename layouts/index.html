@@ -1,98 +1,27 @@
 {{ define "main" }}
-<!-- Hero Video Section -->
-{{ partial "hero-video.html" . }}
-
-<!-- Brand Statement Section -->
-<section class="section section--primary brand-statement">
-    <div class="container">
-        <div class="brand-statement__content">
-            <h2 class="section__heading">Where Tradition Meets Divine Grace</h2>
-            <p class="section__text section__text--large">
-                MATRIS celebrates the timeless elegance of handloom sarees, each piece a tribute to the divine feminine energy that flows through generations of master artisans.
-            </p>
-            <p class="section__text">
-                Every thread tells a story. Every weave honors the Devi within you.
-            </p>
-        </div>
-    </div>
-</section>
-
-<!-- Featured Collections Preview -->
-<section class="section section--alternate featured-collections">
-    <div class="container">
-        <h2 class="section__heading section__heading--center">Our Collections</h2>
-        <div class="collections-grid">
-            <article class="collection-card">
-                <div class="collection-card__image">
-                    <img src="/images/collection-1.jpg" alt="Silk Heritage Collection">
-                    <div class="collection-card__overlay">
-                        <h3 class="collection-card__title">Silk Heritage</h3>
-                        <a href="/collections/silk-heritage/" class="collection-card__link">Discover</a>
-                    </div>
-                </div>
-            </article>
-            <article class="collection-card">
-                <div class="collection-card__image">
-                    <img src="/images/collection-2.jpg" alt="Temple Treasures Collection">
-                    <div class="collection-card__overlay">
-                        <h3 class="collection-card__title">Temple Treasures</h3>
-                        <a href="/collections/temple-treasures/" class="collection-card__link">Discover</a>
-                    </div>
-                </div>
-            </article>
-            <article class="collection-card">
-                <div class="collection-card__image">
-                    <img src="/images/collection-3.jpg" alt="Contemporary Devi Collection">
-                    <div class="collection-card__overlay">
-                        <h3 class="collection-card__title">Contemporary Devi</h3>
-                        <a href="/collections/contemporary-devi/" class="collection-card__link">Discover</a>
-                    </div>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
-
-<!-- Philosophy Teaser -->
-<section class="section section--primary philosophy-teaser">
-    <div class="container">
-        <div class="philosophy-teaser__content">
-            <div class="philosophy-teaser__text">
-                <h2 class="section__heading">The MATRIS Philosophy</h2>
-                <p class="section__text">
-                    We believe every woman embodies the divine feminine—the Devi. Our sarees are not mere garments; they are sacred drapes that honor your inherent grace, strength, and timeless beauty.
-                </p>
-                <p class="section__text">
-                    Hand-woven by master artisans, each MATRIS creation carries the devotion of centuries-old craftsmanship and the promise of sustainable luxury.
-                </p>
-                <a href="/philosophy/" class="button button--secondary">Our Story</a>
-            </div>
-            <div class="philosophy-teaser__image">
-                <img src="/images/philosophy-image.jpg" alt="Artisan weaving traditional saree">
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Newsletter Section -->
-<section class="section section--alternate newsletter">
-    <div class="container container--narrow">
-        <div class="newsletter__content">
-            <h2 class="section__heading section__heading--center">Join the MATRIS Circle</h2>
-            <p class="section__text section__text--center">
-                Be the first to discover new collections and receive insights into the art of handloom heritage.
-            </p>
-            <form class="newsletter__form" action="/subscribe" method="POST">
-                <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="Enter your email" 
-                    required 
-                    class="newsletter__input"
-                    aria-label="Email address"
-                >
-                <button type="submit" class="newsletter__button">Subscribe</button>
-            </form>
+<!-- Full Screen Video Hero (No Navigation) -->
+<section class="hero-video-landing">
+    <div class="video-container-landing">
+        <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            poster="{{ "videos/hero-poster.jpg" | relURL }}"
+            class="hero-video-landing__player"
+            aria-label="MATRIS brand video"
+        >
+            <source src="{{ "videos/hero-desktop.mp4" | relURL }}" type="video/mp4" media="(min-width: 768px)">
+            <source src="{{ "videos/hero-mobile.mp4" | relURL }}" type="video/mp4">
+        </video>
+        
+        <!-- Bottom Overlay Navigation -->
+        <div class="hero-video-landing__bottom-nav">
+            <a href="/shop/" class="bottom-nav__link">SHOP</a>
+            <a href="/" class="bottom-nav__logo">
+                <span class="logo-text">MATRIS</span>
+            </a>
+            <a href="/discover/" class="bottom-nav__link">DISCOVER</a>
         </div>
     </div>
 </section>
