@@ -1,12 +1,22 @@
-baseURL = "https://matris.netlify.app/"
+baseURL = "https://matris.in/"
 languageCode = "en-us"
 title = "MATRIS - Embrace Your Inner Devi"
-theme = ""
+
 
 [params]
   description = "Premium handloom sarees celebrating the divine feminine"
   author = "MATRIS"
   
+  # Brand Colors (Locked)
+  colorVermillion = "#E34234"
+  colorTeal = "#0D4C4A"
+  colorCream = "#F5F1E8"
+  
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
 [menu]
   [[menu.main]]
     name = "Collections"
@@ -14,7 +24,7 @@ theme = ""
     weight = 1
   [[menu.main]]
     name = "Philosophy"
-    url = "/about/"
+    url = "/philosophy/"
     weight = 2
   [[menu.main]]
     name = "Lookbook"
