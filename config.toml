@@ -1,11 +1,10 @@
 baseURL = "https://matris.in/"
 languageCode = "en-us"
 title = "MATRIS - Embrace Your Inner Devi"
-
+disableKinds = ["taxonomy", "term"]
 
 [params]
   description = "Premium handloom sarees celebrating the divine feminine"
-  author = "MATRIS"
   
   # Brand Colors (Locked)
   colorVermillion = "#E34234"
