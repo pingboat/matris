@@ -1,48 +1,44 @@
-// MATRIS Website - Main JavaScript
+// MATRIS Website V2 - Main JavaScript
 
-// Navigation Toggle for Mobile
 document.addEventListener('DOMContentLoaded', function() {
-  const navToggle = document.querySelector('.navigation__toggle');
-  const navMenu = document.querySelector('.navigation__menu');
-  const navigation = document.querySelector('.navigation');
   
-  // Mobile Menu Toggle
-  if (navToggle) {
-    navToggle.addEventListener('click', function() {
-      navMenu.classList.toggle('navigation__menu--active');
+  // Shop Navigation - Show on Scroll
+  const shopNav = document.querySelector('.shop-navigation');
+  if (shopNav) {
+    let lastScroll = 0;
+    window.addEventListener('scroll', function() {
+      const currentScroll = window.pageYOffset;
       
-      // Animate hamburger icon
-      const spans = navToggle.querySelectorAll('span');
-      spans.forEach((span, index) => {
-        if (navMenu.classList.contains('navigation__menu--active')) {
-          if (index === 0) span.style.transform = 'rotate(45deg) translateY(8px)';
-          if (index === 1) span.style.opacity = '0';
-          if (index === 2) span.style.transform = 'rotate(-45deg) translateY(-8px)';
-        } else {
-          span.style.transform = '';
-          span.style.opacity = '';
-        }
-      });
+      if (currentScroll > 200) {
+        shopNav.classList.add('shop-navigation--visible');
+      } else {
+        shopNav.classList.remove('shop-navigation--visible');
+      }
+      
+      lastScroll = currentScroll;
     });
   }
   
-  // Transparent Navigation on Scroll
-  let lastScroll = 0;
-  window.addEventListener('scroll', function() {
-    const currentScroll = window.pageYOffset;
+  // Video Autoplay Fix for Safari/iOS
+  const heroVideo = document.querySelector('.hero-video-landing__player');
+  if (heroVideo) {
+    const playPromise = heroVideo.play();
     
-    if (currentScroll <= 100) {
-      navigation.classList.add('navigation--transparent');
-    } else {
-      navigation.classList.remove('navigation--transparent');
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.log('Video autoplay prevented:', error);
+      });
     }
     
-    lastScroll = currentScroll;
-  });
+    heroVideo.addEventListener('ended', function() {
+      this.currentTime = 0;
+      this.play();
+    });
+  }
   
-  // Smooth Scroll for Anchor Links
-  const anchorLinks = document.querySelectorAll('a[href^="#"]');
-  anchorLinks.forEach(link => {
+  // Smooth Scroll for All Links
+  const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+  smoothScrollLinks.forEach(link => {
     link.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
       if (href !== '#' && href !== '') {
@@ -53,47 +49,115 @@ document.addEventListener('DOMContentLoaded', function() {
             behavior: 'smooth',
             block: 'start'
           });
-          
-          // Close mobile menu if open
-          if (navMenu.classList.contains('navigation__menu--active')) {
-            navMenu.classList.remove('navigation__menu--active');
-          }
         }
       }
     });
   });
   
-  // Hide scroll indicator after scrolling
-  const scrollIndicator = document.querySelector('.scroll-indicator');
-  if (scrollIndicator) {
-    window.addEventListener('scroll', function() {
-      if (window.pageYOffset > 200) {
-        scrollIndicator.style.opacity = '0';
-        scrollIndicator.style.pointerEvents = 'none';
-      } else {
-        scrollIndicator.style.opacity = '1';
-        scrollIndicator.style.pointerEvents = 'auto';
+  // Product Image Gallery
+  const productThumbnails = document.querySelectorAll('.product-thumbnail');
+  const mainImage = document.querySelector('.product-main-image img');
+  
+  if (productThumbnails.length && mainImage) {
+    productThumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', function() {
+        // Remove active class from all thumbnails
+        productThumbnails.forEach(t => t.classList.remove('product-thumbnail--active'));
+        
+        // Add active class to clicked thumbnail
+        this.classList.add('product-thumbnail--active');
+        
+        // Update main image
+        const newImageSrc = this.querySelector('img').src;
+        mainImage.src = newImageSrc;
+      });
+    });
+  }
+  
+  // Size Selector
+  const sizeOptions = document.querySelectorAll('.size-option');
+  
+  if (sizeOptions.length) {
+    sizeOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        if (!this.classList.contains('size-option--disabled')) {
+          // Remove selected class from all options
+          sizeOptions.forEach(opt => opt.classList.remove('size-option--selected'));
+          
+          // Add selected class to clicked option
+          this.classList.add('size-option--selected');
+        }
+      });
+    });
+  }
+  
+  // Quantity Controls
+  const quantityDecrease = document.querySelector('.quantity-btn--decrease');
+  const quantityIncrease = document.querySelector('.quantity-btn--increase');
+  const quantityInput = document.querySelector('.quantity-input');
+  
+  if (quantityDecrease && quantityIncrease && quantityInput) {
+    quantityDecrease.addEventListener('click', function() {
+      let currentValue = parseInt(quantityInput.value);
+      if (currentValue > 1) {
+        quantityInput.value = currentValue - 1;
       }
     });
-  }
-  
-  // Newsletter Form Handling
-  const newsletterForm = document.querySelector('.newsletter__form');
-  if (newsletterForm) {
-    newsletterForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const emailInput = this.querySelector('input[type="email"]');
-      const email = emailInput.value;
-      
-      // Here you would typically send this to your backend
-      // For now, just show a success message
-      alert('Thank you for subscribing! Welcome to the MATRIS Circle.');
-      emailInput.value = '';
+    
+    quantityIncrease.addEventListener('click', function() {
+      let currentValue = parseInt(quantityInput.value);
+      quantityInput.value = currentValue + 1;
     });
   }
   
-  // Lazy Load Images (simple implementation)
+  // Product Details Accordion
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  
+  if (accordionHeaders.length) {
+    accordionHeaders.forEach(header => {
+      header.addEventListener('click', function() {
+        const item = this.parentElement;
+        const isOpen = item.classList.contains('accordion-item--open');
+        
+        // Close all accordion items
+        document.querySelectorAll('.accordion-item').forEach(accItem => {
+          accItem.classList.remove('accordion-item--open');
+        });
+        
+        // Toggle clicked item
+        if (!isOpen) {
+          item.classList.add('accordion-item--open');
+        }
+      });
+    });
+  }
+  
+  // Add to Cart Button
+  const addToCartBtn = document.querySelector('.product-cta');
+  
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', function() {
+      // Check if size is selected
+      const selectedSize = document.querySelector('.size-option--selected');
+      
+      if (!selectedSize) {
+        alert('Please select a size');
+        return;
+      }
+      
+      // Add to cart logic here
+      const originalText = this.textContent;
+      this.textContent = 'ADDED TO CART';
+      this.style.background = 'var(--color-teal)';
+      
+      setTimeout(() => {
+        this.textContent = originalText;
+        this.style.background = 'var(--color-vermillion)';
+      }, 2000);
+    });
+  }
+  
+  // Lazy Load Images
   const images = document.querySelectorAll('img[data-src]');
   const imageObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -107,38 +171,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   images.forEach(img => imageObserver.observe(img));
-  
-  // Video Autoplay Fix for Safari/iOS
-  const heroVideo = document.querySelector('.hero-video__player');
-  if (heroVideo) {
-    // Attempt to play video (necessary for some browsers)
-    const playPromise = heroVideo.play();
-    
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        // Auto-play was prevented
-        console.log('Video autoplay prevented:', error);
-        // You could show a play button here if needed
-      });
-    }
-    
-    // Ensure video loops seamlessly
-    heroVideo.addEventListener('ended', function() {
-      this.currentTime = 0;
-      this.play();
-    });
-  }
 });
 
-// Active Navigation Link Highlighting
-window.addEventListener('load', function() {
-  const currentPath = window.location.pathname;
-  const navLinks = document.querySelectorAll('.navigation__link');
-  
-  navLinks.forEach(link => {
-    const linkPath = new URL(link.href).pathname;
-    if (currentPath === linkPath || (currentPath.startsWith(linkPath) && linkPath !== '/')) {
-      link.classList.add('navigation__link--active');
-    }
+// Smooth Scroll Snap for Full-Page Collections
+if (window.location.pathname.includes('/shop')) {
+  document.body.style.scrollSnapType = 'y mandatory';
+  const collections = document.querySelectorAll('.collection-fullpage');
+  collections.forEach(collection => {
+    collection.style.scrollSnapAlign = 'start';
   });
-});
+}
