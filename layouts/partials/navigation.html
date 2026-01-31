@@ -1,0 +1,21 @@
+<nav class="navigation" id="navigation">
+    <div class="navigation__container">
+        <div class="navigation__brand">
+            <a href="{{ .Site.BaseURL }}" class="navigation__logo">MATRIS</a>
+        </div>
+        <ul class="navigation__menu">
+            {{ range .Site.Menus.main }}
+            <li>
+                <a href="{{ .URL }}" class="navigation__link{{ if $.IsMenuCurrent "main" . }} navigation__link--active{{ end }}">
+                    {{ .Name }}
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+        <button class="navigation__toggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
